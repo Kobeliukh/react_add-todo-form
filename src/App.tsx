@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import './App.scss';
+import { User } from './types/User';
 import { TodoList } from './components/TodoList';
 import { Todo } from './types/Todo';
+import './App.scss';
 
 import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
+
+function getUserById(targetId: number): User | undefined {
+  return usersFromServer.find(user => user.id === targetId);
+}
+
+const modifiedTodos = todosFromServer.map(todo => {
+  const user = getUserById(todo.userId);
+
+  return { ...todo, user: user || null };
+});
 
 const defaultValues = {
   title: '',
@@ -36,7 +47,7 @@ function validate({ title, user }: FormValues): FormErrors {
 const allowedChars = /[^\d a-zA-Zа-щА-ЩьЬюЮяЯіІїЇєЄґҐ']/;
 
 export const App = () => {
-  const [todos, setTodos] = useState<Todo[]>(todosFromServer);
+  const [todos, setTodos] = useState<Todo[]>(modifiedTodos);
   const [values, setValues] = useState(defaultValues);
   const [errors, setErrors] = useState<FormErrors>(defaultErrors);
 

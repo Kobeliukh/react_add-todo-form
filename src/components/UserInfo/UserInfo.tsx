@@ -1,28 +1,12 @@
-import usersFromServer from '../../api/users';
+import { User } from '../../types/User';
 
 interface Props {
-  id: number;
+  user: User;
 }
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
-
-function getUserById(targetId: number): User | undefined {
-  return usersFromServer.find(user => user.id === targetId);
-}
-
-export const UserInfo = ({ id }: Props) => {
-  const user = getUserById(id);
-
-  return (
-    user && (
-      <a className="UserInfo" href={`mailto:${user.email}`}>
-        {user.name}
-      </a>
-    )
+export const UserInfo = ({ user }: Props) =>
+  user && (
+    <a className={String(user.id)} href={`mailto:${user.email}`}>
+      {user.name}
+    </a>
   );
-};

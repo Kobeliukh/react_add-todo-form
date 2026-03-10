@@ -14,7 +14,7 @@ export const TodoList = ({ todos }: Props) => {
           id={todo.id}
           title={todo.title}
           completed={todo.completed}
-          userId={todo.userId}
+          user={todo.user}
         />
       ))}
     </section>
