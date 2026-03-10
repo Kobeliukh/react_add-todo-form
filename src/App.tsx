@@ -89,12 +89,14 @@ export const App = () => {
     }
 
     const maxId = Math.max(...todos.map(todo => todo.id)) + 1;
+    const user = getUserById(values.user);
 
     const newTodo: Todo = {
       id: maxId,
       title: values.title,
       completed: false,
       userId: values.user,
+      user: user || null,
     };
 
     setTodos([...todos, newTodo]);
